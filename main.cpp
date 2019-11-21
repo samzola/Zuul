@@ -1,10 +1,18 @@
 #include <iostream>
 #include <cstring>
 #include "room.h"
+#include "player.h"
+#include "parser.h"
 
 using namespace std;
 
 int main() {
+  char command[50];
+  bool playing = true;
+  Parser parser;
+    
+  cout << "As you try to open the door and leave your school, a very large security guard yells, \"You can'tleave unless you bring me a cheeseburger!!!!\"" << endl << endl << "It looks like you must go around the school and find ingredients, then bring them to the kitchenand make a burger." << endl << "Then, the security guard will hopefully let you leave!" << endl;
+  
   Room* entrance = new Room();
   strcpy(entrance->getName(), "Main Entrance");
   strcpy(entrance->getDescription(), "You just stepped into the school and currently stand by the main entrance. There's an office to your right and a big hallway ahead of you.");
@@ -22,7 +30,7 @@ int main() {
   strcpy(westHall2->getDescription(), "You've reached the end of the west hallway, and see three classrooms around you. In one class, some cool students are doing some awesome coding.");
   Room* computer = new Room();
   strcpy(computer->getName(), "Computer Lab");
-  strcpy(computer->getDescription(), "You step into the computer lab. An enraged Mr. Galbraith asks you why you aren't in class.");  
+  strcpy(computer->getDescription(), "You step into the computer lab. An extremely unhappy Mr. Galbraith asks you why you aren't in class.");  
   Room* english = new Room();
   strcpy(english->getName(), "English Classroom");
   strcpy(english->getDescription(), "You walk into the english classroom. Even though this is a high school, the teacher is going over the alphabet.");
@@ -59,5 +67,70 @@ int main() {
   Room* gym = new Room();
   strcpy(gym->getName(), "Gym");
   strcpy(gym->getDescription(), "You are now inside the gym, the biggest room in the school. On your right, a group of students are playing pickup basektball, while on your left, students are playing soccer.");
+  Room* kitchen = new Room();
+  strcpy(kitchen->getName(), "Kitchen");
+  strcpy(kitchen->getDescription(), "You are in the kitchen. Smells fill your nose and you suddenly feel like you could make a burger in this room.");
+  
+  Item* patty = new Item((char*) "Patty");
+  lockers->addItem(patty);
+  Item* bun = new Item((char*) "Bun");
+  history->addItem(bun);
+  Item* cheese = new Item((char*) "Cheese");
+  computer->addItem(cheese);
+  Item* tomato = new Item((char*) "Tomato");
+  math->addItem(tomato);
+  Item* lettuce = new Item((char*) "Lettuce");
+  biology->addItem(lettuce);
+  Item* pickles = new Item((char*) "Pickles");
+  gym->addItem(pickles);
+  Item* burger = new Item((char*) "Burger");
+
+  entrance->getExits()->insert(pair<const char*, Room*>("north", mainHall));
+  entrance->getExits()->insert(pair<const char*, Room*>("east", office));
+  office->getExits()->insert(pair<const char*, Room*>("west", entrance));
+  mainHall->getExits()->insert(pair<const char*, Room*>("east", math));
+  mainHall->getExits()->insert(pair<const char*, Room*>("north", northHall1));
+  mainHall->getExits()->insert(pair<const char*, Room*>("west", westHall1));
+  mainHall->getExits()->insert(pair<const char*, Room*>("south", entrance));
+  westHall1->getExits()->insert(pair<const char*, Room*>("west", westHall2));
+  westHall1->getExits()->insert(pair<const char*, Room*>("east", mainHall));
+  westHall2->getExits()->insert(pair<const char*, Room*>("west", english));
+  westHall2->getExits()->insert(pair<const char*, Room*>("north", computer));
+  westHall2->getExits()->insert(pair<const char*, Room*>("south", history));
+  westHall2->getExits()->insert(pair<const char*, Room*>("east", westHall1));
+  computer->getExits()->insert(pair<const char*, Room*>("south", westHall2));
+  english->getExits()->insert(pair<const char*, Room*>("east", westHall2));
+  history->getExits()->insert(pair<const char*, Room*>("north", westHall2));
+  northHall1->getExits()->insert(pair<const char*, Room*>("south", mainHall));
+  northHall1->getExits()->insert(pair<const char*, Room*>("north", northHall2));
+  northHall1->getExits()->insert(pair<const char*, Room*>("west", kitchen));
+  northHall1->getExits()->insert(pair<const char*, Room*>("east", physics));
+  northHall2->getExits()->insert(pair<const char*, Room*>("south", northHall1));
+  northHall2->getExits()->insert(pair<const char*, Room*>("north", northHall3));
+  northHall2->getExits()->insert(pair<const char*, Room*>("west", gymHall));
+  northHall2->getExits()->insert(pair<const char*, Room*>("east", chemistry));
+  northHall3->getExits()->insert(pair<const char*, Room*>("south", northHall2));
+  northHall3->getExits()->insert(pair<const char*, Room*>("east", biology));
+  biology->getExits()->insert(pair<const char*, Room*>("west", northHall3));
+  chemistry->getExits()->insert(pair<const char*, Room*>("west", northHall2));
+  physics->getExits()->insert(pair<const char*, Room*>("west", northHall1));
+  math->getExits()->insert(pair<const char*, Room*>("west", mainHall));
+  gymHall->getExits()->insert(pair<const char*, Room*>("west", gym));
+  gymHall->getExits()->insert(pair<const char*, Room*>("north", lockers));
+  gymHall->getExits()->insert(pair<const char*, Room*>("east", northHall2));
+  lockers->getExits()->insert(pair<const char*, Room*>("south", gymHall));
+  gym->getExits()->insert(pair<const char*, Room*>("east", gymHall));
+  kitchen->getExits()->insert(pair<const char*, Room*>("east", northHall1));
+
+  Player* player = new Player(entrance);
+  
+  while (playing == true) {
+    cout << "Please type in a command." << endl;
+    cin.get(command, 50);
+    cin.clear();
+    cin.ignore(1000000, '\n');
+    playing = parser.processCommand(command, player);
+  }
+  
   return 0;
 }
