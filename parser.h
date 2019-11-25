@@ -8,7 +8,7 @@
 #include "item.h"
 #include "player.h"
 
-class Parser {
+class Parser { //class that processes all commands
  public:
   bool processCommand(char*, Player*);
  private:

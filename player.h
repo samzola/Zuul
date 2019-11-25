@@ -10,7 +10,8 @@ using namespace std;
 
 class Player {
  public:
-  Player(Room*);
+  Player(Room*); //constructor, puts the player in a room
+  //getters and setters
   Room* getCurrentRoom();
   vector<Item*>* getItems();
   void setCurrentRoom(Room*);

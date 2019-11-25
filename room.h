@@ -12,7 +12,8 @@ class Item;
 
 class Room {
  public:
-  Room();
+  Room(); //constructor
+  //getters and setters
   char* getName();
   char* getDescription();
   bool isValidRoom(char*);

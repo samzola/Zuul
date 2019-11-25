@@ -1,3 +1,9 @@
+/*
+ * Name: Sam Zola
+ * Date: 11/25/2019
+ * Program: This program allows the user to play a game, where the goal is to collect all items hidden arond a school.
+ */
+
 #include <iostream>
 #include <cstring>
 #include "room.h"
@@ -7,12 +13,13 @@
 using namespace std;
 
 int main() {
-  char command[50];
-  bool playing = true;
+  char command[50]; //keeps track of the command
+  bool playing = true; //keeps track of game status
   Parser parser;
-    
+  //give start message  
   cout << "As you try to open the door and leave your school, a very large security guard yells, \"You can'tleave unless you bring me a cheeseburger!!!!\"" << endl << endl << "It looks like you must go around the school and find ingredients, then bring them to the kitchenand make a burger." << endl << "Then, the security guard will hopefully let you leave!" << endl;
   
+  //create all rooms with names and descriptions
   Room* entrance = new Room();
   strcpy(entrance->getName(), "Main Entrance");
   strcpy(entrance->getDescription(), "You just stepped into the school and currently stand by the main entrance. There's an office to your right and a big hallway ahead of you.");
@@ -70,7 +77,8 @@ int main() {
   Room* kitchen = new Room();
   strcpy(kitchen->getName(), "Kitchen");
   strcpy(kitchen->getDescription(), "You are in the kitchen. Smells fill your nose and you suddenly feel like you could make a burger in this room.");
-  
+
+  //create all items with names and rooms
   Item* patty = new Item((char*) "Patty");
   lockers->addItem(patty);
   Item* bun = new Item((char*) "Bun");
@@ -83,8 +91,8 @@ int main() {
   biology->addItem(lettuce);
   Item* pickles = new Item((char*) "Pickles");
   gym->addItem(pickles);
-  Item* burger = new Item((char*) "Burger");
 
+  //create all exits for every room
   entrance->getExits()->insert(pair<const char*, Room*>("north", mainHall));
   entrance->getExits()->insert(pair<const char*, Room*>("east", office));
   office->getExits()->insert(pair<const char*, Room*>("west", entrance));
@@ -122,15 +130,17 @@ int main() {
   gym->getExits()->insert(pair<const char*, Room*>("east", gymHall));
   kitchen->getExits()->insert(pair<const char*, Room*>("east", northHall1));
 
-  Player* player = new Player(entrance);
+  Player* player = new Player(entrance); //create player at entrance
 
+  //show exits and rooms for entrance
   player->getCurrentRoom()->getDescription();
   cout << endl << "Exits: ";
   player->getCurrentRoom()->getExitDirections();
   cout << endl << "Items: ";
   player->getCurrentRoom()->printItems();
   cout << endl;
-  
+
+  //asks for commands while the game is being played
   while (playing == true) {
     cout << "Please type in a command." << endl;
     cin.get(command, 50);

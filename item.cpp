@@ -5,11 +5,11 @@
 
 using namespace std;
 
-Item::Item(char* newName) {
+Item::Item(char* newName) { //constructor, allows name to be set
   name = newName;
 }
 
-char* Item::getName() {
+char* Item::getName() { //returns item name
   return name;
 };
 
