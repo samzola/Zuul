@@ -123,6 +123,13 @@ int main() {
   kitchen->getExits()->insert(pair<const char*, Room*>("east", northHall1));
 
   Player* player = new Player(entrance);
+
+  player->getCurrentRoom()->getDescription();
+  cout << endl << "Exits: ";
+  player->getCurrentRoom()->getExitDirections();
+  cout << endl << "Items: ";
+  player->getCurrentRoom()->printItems();
+  cout << endl;
   
   while (playing == true) {
     cout << "Please type in a command." << endl;

@@ -12,9 +12,15 @@ class Player {
  public:
   Player(Room*);
   Room* getCurrentRoom();
+  vector<Item*>* getItems();
   void setCurrentRoom(Room*);
+  void addItem(Item*);
+  Item* getItem(char*);
+  void printInventory();
+  bool validItem(char*);
  private:
   Room* currentRoom;
-};
+  vector<Item*> items;
+  };
 
 #endif

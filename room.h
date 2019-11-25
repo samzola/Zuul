@@ -20,6 +20,10 @@ class Room {
   vector<Item*>* getItems();
   map<const char*, Room*>* getExits();
   void addItem(Item*);
+  void getExitDirections();
+  Item* getItem(char*);
+  void printItems();
+  bool validItem(char* itemName);
  private:
   char name[25];
   char description[500];

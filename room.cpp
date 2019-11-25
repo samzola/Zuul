@@ -48,3 +48,47 @@ void Room::addItem(Item* item) {
   items.push_back(item);
 }
 
+void Room::getExitDirections() {
+  int i = 0;
+  map<const char*, Room*>::iterator it;
+  for (it = this->exits.begin(); it != this->exits.end(); ++it) {
+    if (i == 0) {
+      cout << it->first;
+      i++;
+    }
+    else {
+      cout << ", " << it->first;
+    }
+  }
+  cout << endl;
+}
+
+bool Room::validItem(char* itemName) {
+  vector<Item*>::iterator it;
+  for (it = items.begin(); it != items.end(); ++it) {
+    if (strcmp((*it)->getName(), itemName) == 0) {
+      return true;
+    }
+  }
+  return false;
+}
+
+void Room::printItems() {
+  vector<Item*>::iterator it;
+  for (it = items.begin(); it != items.end(); ++it) {
+    cout << (*it)->getName() << " ";
+  }
+  cout << endl;
+}
+
+Item* Room::getItem(char* itemName) {
+  vector<Item*>::iterator it;
+  for (it = items.begin(); it != items.end(); ++it) {
+    if (strcmp((*it)->getName(), itemName) == 0) {
+      Item* i = (*it);
+    it:items.erase(it);
+      return (i);
+    }
+  }
+  return NULL;
+}
